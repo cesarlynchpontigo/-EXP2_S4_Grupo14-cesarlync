@@ -1,0 +1,120 @@
+package javaapplication5;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author sd
+ */
+public class  EXP2_S4_Grupo14  {
+
+    
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        char[][] teatro = {
+            {'A', 'O', 'O'},
+            {'B', 'O', 'O'},
+            {'C', 'O', 'O'}
+        };
+
+        while (true) {
+            System.out.println("\n Bienvenidos Teatro Moro ");
+            System.out.println("1. Disponibilidad de Asientos");
+            System.out.println("2. Comprar");
+            System.out.println("3. Salir");
+            System.out.print(" elige una opción 1 / 2 /3 Aqui = ");
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    Ubicaciones(teatro);
+                    break;
+                case 2:
+                    Comprar(teatro);
+                    break;
+                case 3:
+                    System.out.println("Salir hata Pronto.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Opción invalida ");
+            }
+        }
+    }
+
+    public static void Ubicaciones(char[][] moro) {
+        System.out.println("\nPlano del teatro:");
+        for (int i = 0; i < moro.length; i++) {
+            for (int j = 0; j < moro[i].length; j++) {
+                System.out.print(moro[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println(" Ubicación disponible = O ");
+    }
+
+    public static void Comprar(char[][] teatro) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            Ubicaciones(teatro);
+            System.out.println("Selecciona para Fila A,B,C y luego para  columnas 2,3  ");
+            int fila = scanner.nextInt();
+            int columna = scanner.nextInt();
+
+            if (fila < 1 || fila > 3 || columna < 1 || columna > 3) {
+                System.out.println("Ubicación Invalida");
+                continue;
+            }
+             //  ya que calculo o trate de hacer el del 15 adultos comtando los 65 años 
+             // alumnos con el 10%  
+            if (teatro[fila - 1][columna - 1] == 'O') {
+                int edad = EdadV(scanner);
+                double aplica = 3000;
+                double descuento = Descuentos(edad);
+                double Finalp = aplica - (aplica * descuento / 100);
+                System.out.println("\n Resumen");
+                System.out.println("Ubicación : Fila " + ((char) ('A' + fila - 1)) + columna);
+                System.out.println("Precio entrdad" + aplica);
+                System.out.println("Descuentos " + descuento + "aplicados ");
+                System.out.println("Precio = " + Finalp);
+                teatro[fila - 1][columna - 1] = '#';
+                break;
+            } else {
+                System.out.println("Asiento no disponibles.");
+            }
+        }
+    }
+
+    public static int EdadV(Scanner scanner) {
+        int edad;
+        while (true) {
+            System.out.print(" tu edad ");
+            if (scanner.hasNextInt()) {
+                edad = scanner.nextInt();
+                if (edad >= 0) {
+                    break;
+                } else {
+                    System.out.println("error edad negativa");
+                }
+            } else {
+                System.out.println("error edad no valida");
+                scanner.next();
+            }
+        }
+        return edad;
+    }
+     // edad valor  
+    public static double Descuentos(int edad) {
+        if (edad < 18) {
+            return 10;
+        } else if (edad >= 65) {
+            return 15;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+}
